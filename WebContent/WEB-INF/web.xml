@@ -33,6 +33,16 @@
         <url-pattern>/any</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+    <servlet-name>queryserv</servlet-name>
+    <servlet-class>com.capgemini.firstclass.QueryTest</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    <servlet-name>queryserv</servlet-name>
+    <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    
     
     
     
