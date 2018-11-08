@@ -13,6 +13,17 @@
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
 
+
+    <servlet>
+		<servlet-name>LoginServ</servlet-name>
+		<servlet-class>com.capgemini.firstclass.LoginServ</servlet-class>
+	</servlet>
+ 
+	<servlet-mapping>
+		<servlet-name>LoginServ</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+    
 	<servlet>
 		<servlet-name>FirstServ</servlet-name>
 		<servlet-class>com.capgemini.firstclass.FirstServlet</servlet-class>
