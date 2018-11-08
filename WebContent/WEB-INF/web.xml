@@ -43,8 +43,15 @@
     <url-pattern>/search</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+    <servlet-name>createProfile</servlet-name>
+    <servlet-class>com.capgemini.firstclass.CreateProfileServ</servlet-class>
+    </servlet>
     
-    
+    <servlet-mapping>
+    <servlet-name>createProfile</servlet-name>
+    <url-pattern>/register</url-pattern>
+    </servlet-mapping>
     
     
     
