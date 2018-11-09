@@ -1,6 +1,4 @@
 package com.capgemini.firstclass;
-
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
@@ -23,12 +21,11 @@ public class LoginServ extends HttpServlet{
 		
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("text/html");
-		int id = Integer.parseInt(req.getParameter("emp_id"));
+		String username = req.getParameter("emp_id");
 		String password = req.getParameter("password");
 		
-		
 		Connection con = null;
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rs = null;
 		
 		try {
@@ -36,25 +33,17 @@ public class LoginServ extends HttpServlet{
 		java.sql.Driver driver = (java.sql.Driver)Class.forName("com.mysql.jdbc.Driver").newInstance();
 		DriverManager.registerDriver(driver);
 		
-		FileReader fr=new FileReader("D:/DBCredential.properties");
-		Properties properties=new Properties();
-		properties.load(fr);
-		
-		
 		
 		//Estb the db conn via driver
 		String dburl = "jdbc:mysql://localhost:3306/Avengers?";
-		con = DriverManager.getConnection(dburl,properties);
+		con = DriverManager.getConnection(dburl,username,password);
 		
 		
-		String query = "select * from employee_table where e_id=? and e_password=?";
-		pstmt = con.prepareStatement(query);
-		pstmt.setInt(1,id);
-		pstmt.setString(2,password);
-		rs = pstmt.executeQuery();
-		if(rs!=null)
-		{
-		if(rs.next())
+		String query = "select * from employee_table ";
+		stmt = con.createStatement();
+		rs = stmt.executeQuery(query);
+		
+		while(rs.next())
 		{
 			int id1 = rs.getInt("e_id");
 			String name = rs.getString("e_name");
@@ -65,10 +54,20 @@ public class LoginServ extends HttpServlet{
 		    String city = rs.getString("e_city");
 	        	
 		    
-		    out.println("<table>"
+		    out.println(
+		    		"<html>\r\n" + 
+		    		"<head>\r\n" + 
+		    		"<style>\r\n" + 
+		    		"table, th, td {\r\n" + 
+		    		"    border: 1px solid black;\r\n" + 
+		    		"}\r\n" + 
+		    		"</style>\r\n" + 
+		    		"</head>"
+		    		+ "<body>"
+		    		+ "<table>"
 		    		+ "<tr>"		    		
 		    		+ "<th>EmpId :"
-		    		+ "<td>"+id+"</td>"
+		    		+ "<td>"+id1+"</td>"
 		    		+ "</th>"
 		    		+ "</tr>"
 		    		+ "<tr>"
@@ -101,19 +100,18 @@ public class LoginServ extends HttpServlet{
 		    		+ "<td>"+dept+"</td>"
 		    		+ "</th>"
 		    		+ "</tr>"
-		    		+ "</table>");
+		    		+ "</table>"
+		    		+ "</body>"
+		    		+ "</html>");
 		    
 		   	
-		}
-		}else
-		{
-			out.println("Something went wrong");
 		}
 		
 		}catch(Exception e)
 		{
-			e.printStackTrace();
-		}
+			out.println("<h1>Incorrect username or password</h1>");
+	}
+	
 		finally
 		{
 			if(con!=null)
@@ -125,10 +123,10 @@ public class LoginServ extends HttpServlet{
 					e.printStackTrace();
 				}
 			}
-			if(pstmt!=null)
+			if(stmt!=null)
 			{
 				try {
-					pstmt.close();
+					stmt.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -145,9 +143,9 @@ public class LoginServ extends HttpServlet{
 			}
 		}
 		
-		
-		
+		}
+			
 		
 	}
 
-}
+

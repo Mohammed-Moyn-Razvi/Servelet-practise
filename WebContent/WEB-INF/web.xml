@@ -65,6 +65,24 @@
     </servlet-mapping>
     
     
+    <servlet>
+    <servlet-name>method</servlet-name>
+    <servlet-class>com.capgemini.firstclass.TestServMethod</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+    <servlet-name>method</servlet-name>
+    <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+    <servlet-name>generic</servlet-name>
+    <servlet-class>com.capgemini.firstclass.TestGen</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>generic</servlet-name>
+    <url-pattern>/generic</url-pattern>
+    </servlet-mapping>
     
     
     
