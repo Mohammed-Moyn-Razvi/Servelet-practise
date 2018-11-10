@@ -3,6 +3,8 @@ package com.capgemini.firstclass;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +25,25 @@ public class QueryTest extends HttpServlet{
 		
 		System.out.println(a);
 		System.out.println(b);
+		
+		
+		ServletConfig config = getServletConfig();
+		ServletContext context = config.getServletContext();
+		
+		
+		out.print(context.getInitParameter("email"));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
