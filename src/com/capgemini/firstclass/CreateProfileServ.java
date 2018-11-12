@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,9 @@ public class CreateProfileServ extends HttpServlet{
 		
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		
+		RequestDispatcher dis = req.getRequestDispatcher("/head.html");
+		dis.include(req, resp);
 		
 		int eid =  Integer.parseInt(req.getParameter("e_id"));
 		String ename = req.getParameter("e_name");
