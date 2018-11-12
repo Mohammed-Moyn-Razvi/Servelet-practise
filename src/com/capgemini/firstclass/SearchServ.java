@@ -8,14 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LoginServ extends HttpServlet{
+@WebServlet("/sear")
+public class SearchServ extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,12 +25,12 @@ public class LoginServ extends HttpServlet{
 		PrintWriter out = resp.getWriter();
 		resp.setContentType("text/html");
 		String username = req.getParameter("emp_id");
-		String password = req.getParameter("password");
+		int id = Integer.parseInt(username);
 		RequestDispatcher dis = req.getRequestDispatcher("/head.html");
 		dis.include(req, resp);
 		
 		Connection con = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
@@ -39,15 +40,16 @@ public class LoginServ extends HttpServlet{
 		
 		
 		//Estb the db conn via driver
-		String dburl = "jdbc:mysql://localhost:3306/Avengers?";
-		con = DriverManager.getConnection(dburl,username,password);
+		String dburl = "jdbc:mysql://localhost:3306/Avengers?user=root&password=1234";
+		con = DriverManager.getConnection(dburl);
 		
 		
-		String query = "select * from employee_table ";
-		stmt = con.createStatement();
-		rs = stmt.executeQuery(query);
+		String query = "select * from employee_table where e_id = ?";
+		pstmt = con.prepareStatement(query);
+		pstmt.setInt(1,id);
+		rs = pstmt.executeQuery();
 		
-		while(rs.next())
+		if(rs.next())
 		{
 			int id1 = rs.getInt("e_id");
 			String name = rs.getString("e_name");
@@ -127,10 +129,10 @@ public class LoginServ extends HttpServlet{
 					e.printStackTrace();
 				}
 			}
-			if(stmt!=null)
+			if(pstmt!=null)
 			{
 				try {
-					stmt.close();
+					pstmt.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -151,5 +153,23 @@ public class LoginServ extends HttpServlet{
 			
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

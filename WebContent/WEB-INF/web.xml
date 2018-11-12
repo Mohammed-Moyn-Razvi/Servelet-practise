@@ -93,6 +93,15 @@
 		<url-pattern>/generic</url-pattern>
 	</servlet-mapping>
 
+<servlet>
+		<servlet-name>inc</servlet-name>
+		<servlet-class>com.capgemini.firstclass.IncludeServ</servlet-class>
+
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>inc</servlet-name>
+		<url-pattern>/inc</url-pattern>
+	</servlet-mapping>
 
 
 
