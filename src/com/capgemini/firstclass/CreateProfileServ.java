@@ -58,7 +58,7 @@ public class CreateProfileServ extends HttpServlet{
 			
 			if(count>0)
 			{
-				out.println("Data Inserted");
+				out.println("<h1>Data Inserted</h1>");
 				System.out.println("data inserted");
 				
 			}
